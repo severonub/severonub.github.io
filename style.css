@@ -12,6 +12,18 @@ p{
   color: white;
 }
 
+.title-vida{
+	color: #fff;
+	margin-left: 8em;
+	font-family: monospace;
+	font-size: 50px;
+	
+}
+.display-vida{
+	height: 35em;
+	background-color: gray;
+}
+
 /* DEMO-SPECIFIC STYLES */
 .typewriter h1 {
   color: #fff;
