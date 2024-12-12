@@ -11,7 +11,11 @@ p{
   font-family: monospace;
   color: white;
 }
-
+.italic-subtitle{
+	font-family: monospace;
+	color: #d1d1d1;
+	font-style: italic;
+}
 .title-vida{
 	color: #fff;
 	margin-left: 8em;
@@ -23,7 +27,11 @@ p{
 	height: 35em;
 	background-color: gray;
 }
-
+.verdades{
+	color: #fff;
+	font-size: 50px;
+	font-family: monospace;
+}
 /* DEMO-SPECIFIC STYLES */
 .typewriter h1 {
   color: #fff;
