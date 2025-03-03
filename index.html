@@ -8,11 +8,53 @@
     </head>
     <body>
 		<div class="typewriter">
-			<h1>O Okabe ja pagou os editores dele?!</h1>
-			<h2 class="italic-subtitle">atualizado em tempo real!!</h2>
+			<h1>Ultimate Geek Price Calculator!!!</h1>
+			<h2 class="italic-subtitle">100% ATUALIZADO</h2>
 			
 		</div>
-		<h1 class="verdades">NÃO.</h1>	
-		</div>
+		 <!-- <h1 class="verdades">NÃO.</h1> !-->
+		 <h2 class="subtitle">Seu preço</h2>
+
+		 <input type="number" id="precoPorMinuto" placeholder="Valor do seu minuto">
+
+		 <h2 class="subtitle">Tempo de edição</h2>
+
+		 <div class="time-container">
+            <input type="number" class="time" id="minutos" placeholder="Min" min="0" max="59">
+            <input type="number" class="time" id="segundos" placeholder="Seg" min="0" max="59">
+        </div>
+
+		 <button onclick="calcularPreco()">Calcular</button><br>
+
+		 <p id="resultado"></p>
+
+		 <script>
+            function calcularPreco() {
+                let precoPorMinuto = parseFloat(document.getElementById("precoPorMinuto").value);
+                let minutos = parseInt(document.getElementById("minutos").value) || 0;
+                let segundos = parseInt(document.getElementById("segundos").value) || 0;
+
+                // Verifica se o preço foi preenchido corretamente
+                if (isNaN(precoPorMinuto) || precoPorMinuto <= 0) {
+                    document.getElementById("resultado").innerText = "Por favor, insira um valor válido para o preço.";
+                    return;
+                }
+
+                // Verifica se pelo menos minutos ou segundos foram preenchidos
+                if (minutos === 0 && segundos === 0) {
+                    document.getElementById("resultado").innerText = "Insira um tempo válido (minutos ou segundos).";
+                    return;
+                }
+
+                // Converter tudo para minutos (segundos viram fração de minuto)
+                let tempoTotalEmMinutos = minutos + (segundos / 60);
+
+                // Calcular o preço proporcional
+                let precoFinal = (precoPorMinuto * tempoTotalEmMinutos);
+
+                // Exibir resultado formatado
+                document.getElementById("resultado").innerText = `Preço total: R$ ${precoFinal.toFixed(2)}`;
+            }
+        </script>
     </body>
 </html>
