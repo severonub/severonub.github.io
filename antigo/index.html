@@ -1,0 +1,107 @@
+<DOCTYPE html>
+<html lang="pt-br">
+    <head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+		<title>Severonub - Page</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+		<div class="typewriter">
+			<h1>Ultimate Geek Price Calculator!!!</h1>
+			<h2 class="italic-subtitle">100% ATUALIZADO</h2>
+			
+		</div>
+		 <!-- <h1 class="verdades">NÃO.</h1> !-->
+		 <h2 class="subtitle">Seu preço</h2>
+
+		 <input type="number" id="precoPorMinuto" placeholder="Valor do seu minuto">
+
+		 <h2 class="subtitle">Tempo de edição</h2>
+
+		 <div class="time-container">
+            <input type="number" class="time" id="minutos" placeholder="Min" min="0" max="59">
+            <input type="number" class="time" id="segundos" placeholder="Seg" min="0" max="59">
+        </div>
+
+		 <button onclick="calcularPreco()">Calcular</button><br>
+
+		 <p id="resultado" class="resultado"></p>
+
+         <br>
+         <!-- CALCULADORA DE DESCONTO -->
+        
+         <h1>Calculadora de desconto</h1>
+         
+         <h2 class="subtitle">Valor original</h2>
+         <input type="number" id="precoOriginalDesconto" placeholder="O preço antes do desconto">
+         <h2 class="subtitle">Tempo de atraso (em dias)</h2>
+         <input type="number" id="tempoDeAtraso" placeholder="Nº de dias que você atrasou"><br>
+         <h2 class="subtitle">Porcentagem de desconto</h2>
+         <input type="number" id="porcentagemDesconto" placeholder=" Coloca sem o `%`"><br>
+         <button onclick="calcularDesconto()">Calcular Desconto</button><br>
+         <p id="resultado-desconto" class="resultado" style="color: rgb(77, 255, 77)"></p>
+         <p id="desconto-diff" class="resultado" style="color: red"></p>
+		 <script>
+            function calcularPreco() {
+                let precoPorMinuto = parseFloat(document.getElementById("precoPorMinuto").value);
+                let minutos = parseInt(document.getElementById("minutos").value) || 0;
+                let segundos = parseInt(document.getElementById("segundos").value) || 0;
+
+                // Verifica se o preço foi preenchido corretamente
+                if (isNaN(precoPorMinuto) || precoPorMinuto <= 0) {
+                    document.getElementById("resultado").innerText = "Por favor, insira um valor válido para o preço.";
+                    return;
+                }
+
+                // Verifica se pelo menos minutos ou segundos foram preenchidos
+                if (minutos === 0 && segundos === 0) {
+                    document.getElementById("resultado").innerText = "Insira um tempo válido (minutos ou segundos).";
+                    return;
+                }
+
+                // Converter tudo para minutos (segundos viram fração de minuto)
+                let tempoTotalEmMinutos = minutos + (segundos / 60);
+
+                // Calcular o preço proporcional
+                let precoFinal = (precoPorMinuto * tempoTotalEmMinutos);
+
+                // Exibir resultado formatado
+                document.getElementById("resultado").innerText = `Preço total: R$ ${precoFinal.toFixed(2)}`;
+            }
+            function calcularDesconto() {
+                let precoOriginalDesconto = parseFloat(document.getElementById("precoOriginalDesconto").value);
+                let dias = parseInt(document.getElementById("tempoDeAtraso").value) || 0;
+                let porcentagem = parseInt(document.getElementById("porcentagemDesconto").value) || 0;
+
+                // Verifica se o preço foi preenchido corretamente
+                if (isNaN(precoOriginalDesconto) || precoOriginalDesconto <= 0) {
+                    document.getElementById("resultado-desconto").innerText = "Por favor, insira um valor válido para o preço.";
+                    return;
+                }
+
+                // Verifica se pelo menos minutos ou segundos foram preenchidos
+                if (dias === 0) {
+                    document.getElementById("resultado-desconto").innerText = "Insira um tempo válido (dias>0)";
+                    return;
+                }
+
+                // Converter tudo para minutos (segundos viram fração de minuto)
+                let tempoTotalEmMinutos = minutos + (segundos / 60);
+
+                // Calcular o preço proporcional
+                let precoFinal = precoOriginalDesconto - (precoOriginalDesconto*(porcentagem/100)*dias)
+                
+                // evita negativar
+                precoFinal = Math.max(0, precoFinal);
+
+                let desconto = precoOriginalDesconto - precoFinal
+
+                // Exibir resultado formatado
+                document.getElementById("resultado-desconto").innerText = `Valor com desconto: R$ ${precoFinal.toFixed(2)}`;
+                document.getElementById("desconto-diff").innerText = `Valor descontado: R$${desconto.toFixed(2)}` 
+            }
+        </script>
+        <div style="height: 100px;"></div>
+    </body>
+</html>
