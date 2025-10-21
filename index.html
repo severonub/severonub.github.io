@@ -9,10 +9,10 @@
 </head>
 <body>
     <div class="typewriter">
-        <h1>Ultimate Geek Price Calculator!!!</h1>
-        <h2 class="italic-subtitle">100% ATUALIZADO</h2>
+        <h1 id="title">Ultimate Geek Price Calculator!!!</h1>
+        <h2 class="italic-subtitle" id="subtitle">100% ATUALIZADO</h2>
     </div>
-
+    <img src="" id="pedro" class="pedro">
     <h2 class="subtitle">Seu preço</h2>
     <input type="number" id="precoPorMinuto" placeholder="Valor do seu minuto">
 
@@ -34,10 +34,15 @@
     <h2 class="subtitle">Porcentagem de desconto</h2>
     <input type="number" id="porcentagemDesconto" placeholder="Coloca sem o `%`">
     <button onclick="calcularDesconto()">Calcular Desconto</button>
-    <p id="resultado-desconto" class="resultado"></p>
-    <p id="desconto-diff" class="resultado"></p>
+    <p id="resultado-desconto" class="resultado" style="color: #3cff33;"></p>
+    <p id="desconto-diff" class="resultado" style="color: red;"></p>
 
     <script>
+        function pedroyz() {
+            document.getElementById("title").innerText = "PEDROYZ";
+            document.getElementById("subtitle").innerText = "100% PEDROYZ";
+            document.getElementById("pedro").src = "PEDROYZ.png";
+        }
         function calcularPreco() {
             let precoPorMinuto = parseFloat(document.getElementById("precoPorMinuto").value);
             let minutos = parseInt(document.getElementById("minutos").value) || 0;
@@ -50,6 +55,11 @@
 
             if (minutos === 0 && segundos === 0) {
                 document.getElementById("resultado").innerText = "Insira um tempo válido (minutos ou segundos).";
+                return;
+            }
+
+            if(precoPorMinuto === 69 && minutos === 69 && segundos === 69){
+                pedroyz();
                 return;
             }
 
