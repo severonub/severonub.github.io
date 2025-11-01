@@ -1,95 +1,213 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Severonub - Page</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Severonub — Ultimate Geek Price Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <meta name="description" content="Calculadora para editores — preço por minuto / descontos/">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="typewriter">
-        <h1 id="title">Ultimate Geek Price Calculator!!!</h1>
-        <h2 class="italic-subtitle" id="subtitle">100% ATUALIZADO</h2>
-    </div>
-    <img src="" id="pedro" class="pedro">
-    <h2 class="subtitle">Seu preço</h2>
-    <input type="number" id="precoPorMinuto" placeholder="Valor do seu minuto">
+  <div class="shell">
+    <header>
+      <div class="brand">
+        <div class="logo">U</div>
+        <div class="title">
+          <h1>Ultimate Geek Price Calculator</h1>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <a class="btn btn-ghost" href="https://github.com/severonub/severonub.github.io" target="_blank" rel="noopener" style="text-decoration:none">GitHub</a>
+      </div>
+    </header>
 
-    <h2 class="subtitle">Tempo de edição</h2>
-    <div class="time-container">
-        <input type="number" class="time" id="minutos" placeholder="Min" min="0" max="59">
-        <input type="number" class="time" id="segundos" placeholder="Seg" min="0" max="59">
-    </div>
-    <button onclick="calcularPreco()">Calcular</button>
-    <p id="resultado" class="resultado"></p>
+    <main class="grid">
+      <section class="card">
+        <div class="hero">
+          <h2 class="typewriter-title">Ultimate Geek Price Calculator</h2>
+          <p class="muted">Rápido, preciso e pensado para editores — insira seu preço por minuto e o tempo.</p>
+        </div>
 
-    <h1>Calculadora de desconto</h1>
-    <h2 class="subtitle">Valor original</h2>
-    <input type="number" id="precoOriginalDesconto" placeholder="O preço antes do desconto">
+        <hr style="opacity:.06;margin:14px 0;border:none;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.03),transparent)">
 
-    <h2 class="subtitle">Tempo de atraso (em dias)</h2>
-    <input type="number" id="tempoDeAtraso" placeholder="Nº de dias que você atrasou">
+        <div class="controls" aria-live="polite">
+          <div>
+            <label for="precoPorMinuto">Preço por minuto (R$)</label>
+            <input id="precoPorMinuto" type="number" inputmode="decimal" placeholder="Ex: 350" min="0" step="0.01">
+          </div>
 
-    <h2 class="subtitle">Porcentagem de desconto</h2>
-    <input type="number" id="porcentagemDesconto" placeholder="Coloca sem o `%`">
-    <button onclick="calcularDesconto()">Calcular Desconto</button>
-    <p id="resultado-desconto" class="resultado" style="color: #3cff33;"></p>
-    <p id="desconto-diff" class="resultado" style="color: red;"></p>
+          <div>
+            <label>Tempo de edição</label>
+            <div class="row">
+              <input id="minutos" class="time" type="number" placeholder="Min" min="0">
+              <input id="segundos" class="time" type="number" placeholder="Seg" min="0" max="59">
+            </div>
+          </div>
 
-    <script>
-        function pedroyz() {
-            document.getElementById("title").innerText = "PEDROYZ";
-            document.getElementById("subtitle").innerText = "100% PEDROYZ";
-            document.getElementById("pedro").src = "PEDROYZ.png";
+          <div class="actions">
+            <button class="btn btn-primary" id="calcBtn">Calcular preço</button>
+            <button class="btn btn-ghost" id="clearBtn">Limpar</button>
+          </div>
+
+          <div id="resultado" class="result" role="status" aria-live="polite" style="display:none"></div>
+        </div>
+
+        <footer style="margin-top:12px">
+          <small class="muted">Dica: use o botão limpar para redefinir campos.</small>
+        </footer>
+      </section>
+
+      <aside class="card sidebar">
+        <div class="section">
+          <h3 style="margin:0;font-size:0.95rem">Calculadora de desconto</h3>
+          <p class="muted small">Calcule descontos dependentes de dias de atraso.</p>
+        </div>
+
+        <div class="section">
+          <label for="precoOriginalDesconto">Valor original (R$)</label>
+          <input id="precoOriginalDesconto" type="number" placeholder="Ex: 200.00" min="0" step="0.01">
+        </div>
+
+        <div class="section">
+          <label for="tempoDeAtraso">Tempo de atraso (dias)</label>
+          <input id="tempoDeAtraso" type="number" placeholder="Ex: 3" min="0">
+        </div>
+
+        <div class="section">
+          <label for="porcentagemDesconto">Porcentagem por dia (%)</label>
+          <input id="porcentagemDesconto" type="number" placeholder="Ex: 5" min="0" max="100">
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="calcDescontoBtn">Calcular desconto</button>
+          <button class="btn btn-ghost" id="clearDescontoBtn">Limpar</button>
+        </div>
+
+        <div id="resultado-desconto" class="result" style="display:none;margin-top:12px"></div>
+        <div id="desconto-diff" class="result" style="display:none;margin-top:8px"></div>
+
+        <hr style="opacity:.06;margin:14px 0;border:none;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.03),transparent)">
+      </aside>
+    </main>
+
+    <footer style="text-align:center;margin-top:18px;color:var(--muted)">
+      <small>Feito com ❤️ para editores • Por severonub (e o ChatGPT que fez a interface, pq eu não teria paciência pra isso e não manjo nada de front end :D)</small>
+    </footer>
+  </div>
+
+  <script>
+    // util
+    const $ = id => document.getElementById(id);
+
+    function formatMoney(v){
+      return v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    }
+
+    function clearInputs(ids){ ids.forEach(i=>$(i).value=''); }
+
+    // preço total
+    function calcularPreco(){
+      const precoPorMinuto = parseFloat($('precoPorMinuto').value);
+      const minutos = parseInt($('minutos').value) || 0;
+      const segundos = parseInt($('segundos').value) || 0;
+
+      const resultadoEl = $('resultado');
+
+      if(isNaN(precoPorMinuto) || precoPorMinuto <= 0){
+        resultadoEl.style.display='block';resultadoEl.textContent='Insira um preço por minuto válido.';return;
+      }
+      if(minutos === 0 && segundos === 0){ resultadoEl.style.display='block';resultadoEl.textContent='Insira um tempo válido.';return; }
+
+      // easter egg original
+      if(precoPorMinuto === 69 && minutos === 69 && segundos === 69){
+        pedroyzMode();
+        resultadoEl.style.display='block';resultadoEl.textContent='PEDROYZ ativado 🌈🫡';
+        return;
+      }
+
+      const tempoTotalMin = minutos + (segundos/60);
+      const precoFinal = precoPorMinuto * tempoTotalMin;
+      resultadoEl.style.display='block';resultadoEl.innerHTML = `<small>Preço final</small><div class="big-result">R$ ${formatMoney(precoFinal)}</div>`;
+    }
+
+    // desconto
+    function calcularDesconto(){
+      const precoOriginal = parseFloat($('precoOriginalDesconto').value);
+      const dias = parseInt($('tempoDeAtraso').value) || 0;
+      const porcentagem = parseFloat($('porcentagemDesconto').value) || 0;
+
+      const res = $('resultado-desconto');
+      const diff = $('desconto-diff');
+      res.style.display='none'; diff.style.display='none';
+
+      if(isNaN(precoOriginal) || precoOriginal <= 0){ res.style.display='block'; res.textContent='Insira um valor original válido.'; return; }
+      if(dias === 0){ res.style.display='block'; res.textContent='Insira dias de atraso (maior que 0).'; return; }
+
+      let precoFinal = precoOriginal - (precoOriginal * (porcentagem/100) * dias);
+      precoFinal = Math.max(0, precoFinal);
+      const desconto = precoOriginal - precoFinal;
+
+      res.style.display='block'; diff.style.display='block';
+      res.innerHTML = `<small>Valor com desconto</small><div class="big-result">R$ ${formatMoney(precoFinal)}</div>`;
+      diff.innerHTML = `<small>Valor descontado</small><div style="color: #ff6b6b;font-weight:800">R$ ${formatMoney(desconto)}</div>`;
+    }
+
+    // eventos
+    document.addEventListener('DOMContentLoaded',()=>{
+      $('calcBtn').addEventListener('click', calcularPreco);
+      $('clearBtn').addEventListener('click',()=>{ clearInputs(['precoPorMinuto','minutos','segundos']); $('resultado').style.display='none'; });
+
+      $('calcDescontoBtn').addEventListener('click', calcularDesconto);
+      $('clearDescontoBtn').addEventListener('click',()=>{ clearInputs(['precoOriginalDesconto','tempoDeAtraso','porcentagemDesconto']); $('resultado-desconto').style.display='none'; $('desconto-diff').style.display='none'; });
+      // small keyboard UX: enter to calculate when in inputs
+      ['precoPorMinuto','minutos','segundos'].forEach(id=>{
+        $(id).addEventListener('keydown',(e)=>{ if(e.key==='Enter') calcularPreco(); });
+      });
+    });
+
+    function pedroyzMode() {
+      const logo = document.querySelector('.logo');
+      logo.innerHTML = '';
+      logo.style.background = `url('PEDROYZ.png') center/cover no-repeat`;
+      logo.style.boxShadow = '0 0 25px rgba(255,255,255,0.6)';
+
+      const rainbowStyle = `
+        @keyframes rainbowFlow {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
-        function calcularPreco() {
-            let precoPorMinuto = parseFloat(document.getElementById("precoPorMinuto").value);
-            let minutos = parseInt(document.getElementById("minutos").value) || 0;
-            let segundos = parseInt(document.getElementById("segundos").value) || 0;
 
-            if (isNaN(precoPorMinuto) || precoPorMinuto <= 0) {
-                document.getElementById("resultado").innerText = "Por favor, insira um valor válido para o preço.";
-                return;
-            }
-
-            if (minutos === 0 && segundos === 0) {
-                document.getElementById("resultado").innerText = "Insira um tempo válido (minutos ou segundos).";
-                return;
-            }
-
-            if(precoPorMinuto === 69 && minutos === 69 && segundos === 69){
-                pedroyz();
-                return;
-            }
-
-            let tempoTotalEmMinutos = minutos + (segundos / 60);
-            let precoFinal = (precoPorMinuto * tempoTotalEmMinutos);
-            document.getElementById("resultado").innerText = `Preço total: R$ ${precoFinal.toFixed(2)}`;
+        .rainbow-mode {
+          background: linear-gradient(270deg,
+            #e40303,
+            #ff8c00,
+            #ffed00,
+            #008026,
+            #24408e,
+            #732982
+          );
+          background-size: 1200% 1200%;
+          animation: rainbowFlow 10s ease infinite;
         }
+      `;
 
-        function calcularDesconto() {
-            let precoOriginalDesconto = parseFloat(document.getElementById("precoOriginalDesconto").value);
-            let dias = parseInt(document.getElementById("tempoDeAtraso").value) || 0;
-            let porcentagem = parseInt(document.getElementById("porcentagemDesconto").value) || 0;
+      const style = document.createElement('style');
+      style.innerHTML = rainbowStyle;
+      document.head.appendChild(style);
 
-            if (isNaN(precoOriginalDesconto) || precoOriginalDesconto <= 0) {
-                document.getElementById("resultado-desconto").innerText = "Por favor, insira um valor válido para o preço.";
-                return;
-            }
+      document.body.classList.add('rainbow-mode');
+      document.querySelectorAll('.btn-primary').forEach(btn => {
+        btn.style.background = 'linear-gradient(90deg, #e40303, #ff8c00, #ffed00, #008026, #24408e, #732982)';
+        btn.style.backgroundSize = '400% 400%';
+        btn.style.animation = 'rainbowFlow 8s ease infinite';
+        btn.style.color = '#fff';
+        btn.style.border = 'none';
+        btn.style.textShadow = '0 0 5px rgba(0,0,0,0.3)';
+      });
+    }
 
-            if (dias === 0) {
-                document.getElementById("resultado-desconto").innerText = "Insira um tempo válido (dias>0)";
-                return;
-            }
-
-            let precoFinal = precoOriginalDesconto - (precoOriginalDesconto * (porcentagem / 100) * dias);
-            precoFinal = Math.max(0, precoFinal);
-            let desconto = precoOriginalDesconto - precoFinal;
-
-            document.getElementById("resultado-desconto").innerText = `Valor com desconto: R$ ${precoFinal.toFixed(2)}`;
-            document.getElementById("desconto-diff").innerText = `Valor descontado: R$ ${desconto.toFixed(2)}`;
-        }
-    </script>
+  </script>
 </body>
 </html>

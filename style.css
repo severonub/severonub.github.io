@@ -1,108 +1,108 @@
-
-/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root{
+--bg:#060607;
+--card:#0f0f14;
+--muted:#9aa0a6;
+--text:#e6eef6;
+--accent-purple: #6f3cff; /* evangelion-ish */
+--accent-green:  #34ff9f;
+--glass: rgba(255,255,255,0.03);
+--radius: 14px;
+--control-height:48px;
+--max-width:980px;
 }
 
-/* Paleta geral e tipografia */
-body {
-  background: #0d0d0d;
-  font-family: monospace, sans-serif;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 3rem 1rem;
+/* Light mode (optional) */
+@media (prefers-color-scheme: light){
+:root{
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --muted:#51606b;
+  --text:#0b1220;
+  --glass: rgba(11,18,32,0.04);
+}
 }
 
-/* Títulos com estilo anime */
-h1, h2 {
-  color: #ff003c;
-  text-shadow: 2px 2px #000;
-  margin: 1rem 0;
-  text-align: center;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+margin:0;
+min-height:100%;
+font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+background: radial-gradient(1200px 600px at 10% 10%, rgba(111,60,255,0.06), transparent),
+            radial-gradient(1000px 500px at 90% 90%, rgba(52,255,159,0.03), transparent),
+            var(--bg);
+color:var(--text);
+display:flex;
+justify-content:center;
+align-items:flex-start;
+padding:2.25rem 1rem;
+-webkit-font-smoothing:antialiased;
+-moz-osx-font-smoothing:grayscale;
 }
 
-/* Subtítulo em itálico */
-.italic-subtitle {
-  font-style: italic;
-  font-size: 1rem;
-  color: #ff6666;
+.shell{width:100%;max-width:var(--max-width);}
+
+header{
+display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;gap:1rem
 }
 
-/* Inputs com estética neon */
-input {
-  width: 280px;
-  padding: 12px;
-  margin: 8px 0;
-  background-color: #1a1a1a;
-  color: #fff;
-  border: 2px solid #ff003c;
-  border-radius: 10px;
-  font-size: 1rem;
-  transition: all 0.3s ease-in-out;
+.brand{
+display:flex;gap:0.9rem;align-items:center
+}
+.logo{
+width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent-purple),var(--accent-green));
+display:grid;place-items:center;font-weight:800;font-family:'Press Start 2P',monospace;color:var(--bg);
+box-shadow:0 6px 30px rgba(0,0,0,0.6), inset 0 -6px 18px rgba(0,0,0,0.25);
+}
+.title{line-height:1}
+.title h1{font-size:1rem;margin:0;font-weight:700}
+.title p{margin:0;font-size:0.78rem;color:var(--muted)}
+
+/* layout */
+.grid{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+
+/* responsive: stack on small screens */
+@media (max-width:880px){
+.grid{grid-template-columns:1fr}
+.brand .logo{width:48px;height:48px}
 }
 
-input:focus {
-  border-color: #ff003c;
-  box-shadow: 0 0 10px #ff003c;
-  outline: none;
-}
+/* card */
+.card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.01));border-radius:var(--radius);padding:20px;box-shadow:0 8px 40px rgba(2,6,23,0.6);}
 
-/* Time input específico */
-.time {
-  width: 70px;
-  text-align: center;
-}
+.hero{display:flex;flex-direction:column;gap:10px}
+.hero h2{font-family:'Press Start 2P',monospace;font-size:0.85rem;margin:0;color:var(--accent-green)}
+.hero p{color:var(--muted);margin:0}
 
-/* Botões estilo cyberpunk */
-button {
-  background-color: #ff003c;
-  color: #fff;
-  border: none;
-  padding: 12px 30px;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 15px;
-  box-shadow: 0 4px 10px rgba(255, 0, 60, 0.4);
-  transition: background 0.3s ease;
-}
+/* form */
+label{display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px}
+.controls{display:flex;flex-direction:column;gap:12px}
 
-button:hover {
-  background-color: #cc002f;
-}
+input[type=number]{height:var(--control-height);padding:0 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:var(--text);font-size:0.95rem}
+input::placeholder{color:rgba(255,255,255,0.25)}
 
-/* Resultados */
-.resultado {
-  margin-top: 1rem;
-  font-size: 1.1rem;
-  color: #ffffff;
-}
+.row{display:flex;gap:8px}
+.time input{width:100%;}
 
-/* Layout container para inputs de tempo */
-.time-container {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{height:var(--control-height);padding:0 16px;border-radius:10px;display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font-weight:600}
+.btn-primary{background:linear-gradient(90deg,var(--accent-purple),var(--accent-green));color:var(--bg);box-shadow:0 8px 30px rgba(52,255,159,0.08)}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text)}
 
-/* Estilo máquina de escrever */
-.typewriter h1 {
-  overflow: hidden;
-  white-space: nowrap;
-  animation: typing 2.2s steps(30, end), blink-caret .5s step-end infinite;
-}
+.result{margin-top:12px;padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));font-weight:700}
+.result small{display:block;font-weight:500;color:var(--muted);font-size:0.85rem}
 
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
+/* right column - summary / discount */
+.sidebar .section{margin-bottom:12px}
+.muted{color:var(--muted);font-size:0.86rem}
 
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: #ff003c; }
-}
+.big-result{font-size:1.25rem;color:var(--accent-green);font-weight:800}
+
+footer{margin-top:18px;color:var(--muted);font-size:0.82rem;text-align:center}
+
+/* small touch: neon focus */
+input:focus{outline:none;box-shadow:0 0 18px rgba(111,60,255,0.08),0 0 26px rgba(52,255,159,0.03)}
+
+/* fancy typewriter title (reduced) */
+.typewriter-title{font-family:'Press Start 2P',monospace;font-size:1rem}
+.small{font-size:0.86rem}
