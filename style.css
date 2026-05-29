@@ -26,7 +26,7 @@
 html,body{height:100%}
 body{
 margin:0;
-min-height:100%;
+min-height:100vh;
 font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 background: radial-gradient(1200px 600px at 10% 10%, rgba(111,60,255,0.06), transparent),
             radial-gradient(1000px 500px at 90% 90%, rgba(52,255,159,0.03), transparent),
@@ -35,7 +35,8 @@ color:var(--text);
 display:flex;
 justify-content:center;
 align-items:flex-start;
-padding:2.25rem 1rem;
+
+padding: 2.25rem 1rem 5rem 1rem;
 -webkit-font-smoothing:antialiased;
 -moz-osx-font-smoothing:grayscale;
 }
@@ -88,6 +89,7 @@ input::placeholder{color:rgba(255,255,255,0.25)}
 .btn{height:var(--control-height);padding:0 16px;border-radius:10px;display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font-weight:600}
 .btn-primary{background:linear-gradient(90deg,var(--accent-purple),var(--accent-green));color:var(--bg);box-shadow:0 8px 30px rgba(52,255,159,0.08)}
 .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text)}
+.btn-multi{background:linear-gradient(90deg,var(--accent-purple),var(--accent-green));color:var(--bg);box-shadow:0 8px 30px rgba(52,255,159,0.08)}
 
 .result{margin-top:12px;padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));font-weight:700}
 .result small{display:block;font-weight:500;color:var(--muted);font-size:0.85rem}
@@ -106,3 +108,21 @@ input:focus{outline:none;box-shadow:0 0 18px rgba(111,60,255,0.08),0 0 26px rgba
 /* fancy typewriter title (reduced) */
 .typewriter-title{font-family:'Press Start 2P',monospace;font-size:1rem}
 .small{font-size:0.86rem}
+
+.editor-box{ 
+  padding:16px; 
+  border-radius:12px; 
+  margin-bottom:16px; 
+  background:rgba(255,255,255,0.02); 
+  border:1px solid rgba(255,255,255,0.04); 
+} 
+.editor-header{
+   margin-bottom:12px; 
+} 
+  
+.editor-name{ width:100%; height:40px; padding:0 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04); background:var(--glass); color:var(--text); font-size:0.9rem; }
+#editors-container{ 
+  display:flex; 
+  flex-direction:column; 
+  gap:12px; 
+}

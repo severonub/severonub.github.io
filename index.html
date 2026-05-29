@@ -19,6 +19,7 @@
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <a class="btn btn-ghost" href="https://github.com/severonub/severonub.github.io" target="_blank" rel="noopener" style="text-decoration:none">GitHub</a>
+        <a class="btn btn-multi" href="multi-editor.html" target="_blank" rel="noopener" style="text-decoration:none">Multi Editor</a>
       </div>
     </header>
 
@@ -105,6 +106,13 @@
     }
 
     function clearInputs(ids){ ids.forEach(i=>$(i).value=''); }
+
+    // persistência do preço por minuto no localStorage
+    $('precoPorMinuto').value = localStorage.getItem('precoPorMinuto') || '';
+
+    $('precoPorMinuto').addEventListener('input', (e) => {
+      localStorage.setItem('precoPorMinuto', e.target.value);
+    });
 
     // preço total
     function calcularPreco(){

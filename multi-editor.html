@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Multi Editor Calculator</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="shell">
+
+    <header>
+      <div class="brand">
+        <div class="logo">M</div>
+
+        <div class="title">
+          <h1>Multi Editor Calculator</h1>
+          <p>Calcule vários editores ao mesmo tempo</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;align-items:center">
+        <a class="btn btn-ghost" href="index.html" style="text-decoration:none">
+          Voltar
+        </a>
+      </div>
+    </header>
+
+    <main class="grid">
+
+      <section class="card">
+
+        <div class="hero">
+          <h2 class="typewriter-title">MULTI EDITOR MODE</h2>
+
+          <p class="muted">
+            Adicione múltiplos editores e calcule o valor total do projeto.
+          </p>
+        </div>
+
+        <hr style="opacity:.06;margin:14px 0;border:none;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.03),transparent)">
+
+        <div id="editors-container"></div>
+
+        <div class="actions" style="margin-top:16px">
+          <button class="btn btn-primary" id="addEditorBtn">
+            + Adicionar editor
+          </button>
+
+          <button class="btn btn-ghost" id="calcAllBtn">
+            Calcular total
+          </button>
+
+          <button class="btn btn-ghost" id="clearAllBtn">
+            Limpar tudo
+          </button>
+        </div>
+
+        <div id="resultadoFinal" class="result" style="display:none"></div>
+
+      </section>
+
+      <aside class="card sidebar">
+
+        <div class="section">
+          <h3 style="margin:0;font-size:0.95rem">
+            Como funciona?
+          </h3>
+
+          <p class="muted small">
+            Cada editor possui:
+          </p>
+
+          <ul class="muted small" style="padding-left:18px">
+            <li>Nome</li>
+            <li>Preço por minuto</li>
+            <li>Tempo editado</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <p class="muted small">
+            O sistema calcula:
+          </p>
+
+          <ul class="muted small" style="padding-left:18px">
+            <li>Valor individual</li>
+            <li>Total do projeto</li>
+          </ul>
+        </div>
+
+      </aside>
+
+    </main>
+
+  </div>
+
+  <script>
+
+    const container = document.getElementById("editors-container");
+
+    function formatMoney(v){
+      return v.toLocaleString('pt-BR',{
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      });
+    }
+
+    function salvar(){
+      localStorage.setItem(
+        "multiEditors",
+        container.innerHTML
+      );
+    }
+
+    function criarEditor(nome="", preco="", min="", seg=""){
+
+      const div = document.createElement("div");
+
+      div.className = "editor-box";
+
+      div.innerHTML = `
+        <div class="editor-header">
+          <input type="text"
+                 id="editorName"
+                 class="editor-name"
+                 placeholder="Nome do editor"
+                 value="${nome}">
+        </div>
+
+        <div class="controls">
+
+          <div>
+            <label>Preço por minuto (R$)</label>
+
+            <input type="number"
+                   class="editor-price"
+                   placeholder="Ex: 250"
+                   value="${preco}">
+          </div>
+
+          <div>
+            <label>Tempo</label>
+
+            <div class="row">
+              <input type="number"
+                     class="editor-min"
+                     placeholder="Min"
+                     value="${min}">
+
+              <input type="number"
+                     class="editor-sec"
+                     placeholder="Seg"
+                     value="${seg}">
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-ghost remove-btn">
+              Remover
+            </button>
+          </div>
+
+          <div class="result individual-result" style="display:none"></div>
+
+        </div>
+      `;
+
+      div.querySelector(".remove-btn")
+        .addEventListener("click", () => {
+          div.remove();
+          salvar();
+        });
+
+      div.querySelectorAll("input").forEach(input => {
+        input.addEventListener("input", salvar);
+      });
+
+      container.appendChild(div);
+    }
+
+    function calcularTudo(){
+
+      const editors = document.querySelectorAll(".editor-box");
+
+      let total = 0;
+
+      editors.forEach(editor => {
+
+        const nome = editor.querySelector(".editor-name").value || "Editor";
+
+        const preco =
+          parseFloat(editor.querySelector(".editor-price").value);
+
+        const min =
+          parseInt(editor.querySelector(".editor-min").value) || 0;
+
+        const sec =
+          parseInt(editor.querySelector(".editor-sec").value) || 0;
+
+        const resultado =
+          editor.querySelector(".individual-result");
+
+        if(isNaN(preco) || preco <= 0){
+          resultado.style.display = "block";
+          resultado.innerHTML = `
+            Valor inválido.
+          `;
+          return;
+        }
+
+        const tempo = min + (sec / 60);
+
+        const valor = preco * tempo;
+
+        total += valor;
+
+        resultado.style.display = "block";
+
+        resultado.innerHTML = `
+          <small>${nome}</small>
+          <div class="big-result">
+            R$ ${formatMoney(valor)}
+          </div>
+        `;
+      });
+
+      const final = document.getElementById("resultadoFinal");
+
+      final.style.display = "block";
+
+      final.innerHTML = `
+        <small>Total do projeto</small>
+
+        <div class="big-result">
+          R$ ${formatMoney(total)}
+        </div>
+      `;
+    }
+
+    document.getElementById("addEditorBtn")
+      .addEventListener("click", () => {
+        criarEditor();
+        salvar();
+      });
+
+    document.getElementById("calcAllBtn")
+      .addEventListener("click", calcularTudo);
+
+    document.getElementById("clearAllBtn")
+      .addEventListener("click", () => {
+
+        container.innerHTML = "";
+
+        localStorage.removeItem("multiEditors");
+
+        criarEditor();
+
+        document.getElementById("resultadoFinal")
+          .style.display = "none";
+      });
+
+    window.addEventListener("DOMContentLoaded", () => {
+
+      const saved =
+        localStorage.getItem("multiEditors");
+
+      if(saved){
+        container.innerHTML = saved;
+
+        document.querySelectorAll(".editor-box").forEach(div => {
+
+          div.querySelector(".remove-btn")
+            .addEventListener("click", () => {
+              div.remove();
+              salvar();
+            });
+
+          div.querySelectorAll("input")
+            .forEach(input => {
+              input.addEventListener("input", salvar);
+            });
+
+        });
+
+      } else {
+        criarEditor();
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
